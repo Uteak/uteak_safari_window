@@ -1,0 +1,112 @@
+ switch(actionResult)
+            {
+                case EGameState.Promotion:
+                    {
+                        //UnityEngine.Debug.Log("진화");
+                        Agent[eCurrentTurn].AddReward(+0.001f);
+                        break;
+                    }
+                case EGameState.OnBoardGiraph:
+                    {
+                        //UnityEngine.Debug.Log("기린 놓기");
+                        Agent[eCurrentTurn].AddReward(+0.003f);
+                        break;
+                    }
+                case EGameState.OnBoardElephant:
+                    {
+
+                        //UnityEngine.Debug.Log("코끼리 놓기");
+
+                        Agent[eCurrentTurn].AddReward(+0.002f);
+                        break;
+                    }
+                case EGameState.OnBoardChick:
+                    {
+                        //UnityEngine.Debug.Log("병아리 놓기");
+
+                        Agent[eCurrentTurn].AddReward(+0.001f);
+                        break;
+                    }
+                case EGameState.CaptureChick:
+                    {
+                        //UnityEngine.Debug.Log("병아리 잡기");
+                        Agent[eCurrentTurn].AddReward(+0.001f);
+                        Agent[eOpponent].AddReward(-0.001f);
+                        break;
+                    }
+                case EGameState.CaptureChicken:
+                    {
+                        //UnityEngine.Debug.Log("닭 잡기");
+                        Agent[eCurrentTurn].AddReward(+0.0035f);
+                        Agent[eOpponent].AddReward(-0.0035f);
+                        break;
+                    }
+                case EGameState.CaptureElephant:
+                    {
+                        //UnityEngine.Debug.Log("코끼리 잡기");
+
+                        Agent[eCurrentTurn].AddReward(+0.002f);
+                        Agent[eOpponent].AddReward(-0.002f);
+                        break;
+                    }
+                case EGameState.CaptureGiraph:
+                    {
+                        //UnityEngine.Debug.Log("기린 잡기");
+
+                        Agent[eCurrentTurn].AddReward(+0.003f);
+                        Agent[eOpponent].AddReward(-0.003f);
+                        break;
+                    }
+                case EGameState.Win:
+                    {
+                        //UnityEngine.Debug.Log("State : Win");
+
+                        Agent[eCurrentTurn].SetReward(+0.8f);
+                        Agent[eOpponent].SetReward(-0.8f);
+
+                        //게임이 새로만들어짐
+                        Agent[eCurrentTurn].EndEpisode();
+                        Agent[eOpponent].EndEpisode();
+
+
+                        //게임이 다만들어지면 턴초기화 
+                        eCurrentTurn = SharedDataType.EColor.White;
+
+
+                        break;
+                    }
+                case EGameState.ThreatLion:
+                    {
+                        //UnityEngine.Debug.Log("사자 위협");
+
+                        Agent[eCurrentTurn].AddReward(+0.0001f);
+                        //Agent[eOpponent].AddReward(-0.1f);
+                        break;
+                    }
+                case EGameState.Continue:
+                    {
+                        //일반
+                        //UnityEngine.Debug.Log("일반 움직임");
+                        Agent[eCurrentTurn].AddReward(-0.00001f);
+                        //Agent[eOpponent].AddReward(0f);
+                        break;
+                    }
+                case EGameState.StupidAction:
+                    {
+                        //UnityEngine.Debug.Log("자충수");
+
+                        Agent[eCurrentTurn].AddReward(-0.1f);
+                        //Agent[eOpponent].AddReward(0f);
+                        //Agent[eOpponent].AddReward(0.0f);
+
+                        //Agent[eCurrentTurn].EndEpisode();
+                        //Agent[eOpponent].EndEpisode();
+
+                        break;
+                    }
+                default:
+                    {
+                        UnityEngine.Debug.Log("actionResult Warning");
+                        break;
+                    }
+            }
